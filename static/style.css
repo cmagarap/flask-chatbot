@@ -1,0 +1,41 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.botText {
+    color: white;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: left;
+    line-height: 30px;
+}
+.botText span {
+    background-color: #FF1493;
+    padding: 10px;
+    border-radius: 2px;
+}
+.btn-success {
+    background-color: #0000A0;
+    border-color: #0000A0;
+}
+.btn-success:hover {
+    background-color: white;
+    color: #0000A0;
+    border-color: #0000A0;
+}
+.userText {
+    color: white;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: right;
+    line-height: 30px;
+}
+.userText span {
+    background-color: #0000A0;
+    padding: 10px;
+    border-radius: 2px;
+}
+#textInput {
+    border-bottom: 3px solid #FF1493;
+}

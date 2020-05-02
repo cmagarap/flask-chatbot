@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/xurpas/Documents/flask-chatbot/flask-chatbot/objects/chatbot_model.h5"
+all_model_checkpoint_paths: "/home/xurpas/Documents/flask-chatbot/flask-chatbot/objects/chatbot_model.h5"
