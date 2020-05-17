@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
             <div id="chatbox">
-                <!--                <p class="botText"><span>Hi! I'm Chatterbot</span></p>-->
+                <!-- <p class="botText"><span>Hi!</span></p> -->
             </div>
             <div id="userInput">
                 <input id="textInput" class="form-control" type="text" name="msg" placeholder="Type your message here">
@@ -14,23 +14,34 @@
     </div>
     <script>
         function getResponse() {
-            let userText = $("#textInput").val();
-            let userHtml = '<p class="userText"><span>' + userText + '</span></p>';
-            $("#textInput").val("");
+            let userText = $('#textInput').val();
+            let userHtml = `<p class="userText"><span>${userText}</span></p>`;
+            $('#textInput').val('');
             $("#chatbox").append(userHtml);
-            document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-            $.get("/get-response", { msg: userText }).done(function(data) {
-                var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+
+            document.getElementById('userInput').scrollIntoView({
+                block: 'start',
+                behavior: 'smooth'
+            });
+
+            $.get("/get-response", { msg: userText }).done(function (data) {
+                var botHtml = `<p class="botText"><span>${data}</span></p>`;
                 $("#chatbox").append(botHtml);
-                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+
+                document.getElementById('userInput').scrollIntoView({
+                    block: 'start',
+                    behavior: 'smooth'
+                });
             });
         }
+
         $("#textInput").keypress(function(e) {
-            //if enter key is pressed
-            if(e.which == 13) {
+            // if the enter key is pressed
+            if(e.which === 13) {
                 getResponse();
             }
         });
+
         $("#buttonInput").click(function() {
             getResponse();
         });
