@@ -44,6 +44,14 @@ class Response(db.Model):
         return f"Pattern('{self.id}', '{self.name}')"
 
 
+class Label(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        return f"Label('{self.id}' ,'{self.name}')"
+
+
 # App routes:
 @app.route('/')
 def index():
