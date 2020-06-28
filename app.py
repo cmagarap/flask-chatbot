@@ -17,6 +17,7 @@ tags = db.Table('tags',
                 db.Column('pattern_id', db.Integer, db.ForeignKey('pattern.id')),
                 db.Column('response_id', db.Integer, db.ForeignKey('response.id')))
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -42,14 +43,6 @@ class Response(db.Model):
 
     def __repr__(self):
         return f"Pattern('{self.id}', '{self.name}')"
-
-
-class Label(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-
-    def __repr__(self):
-        return f"Label('{self.id}' ,'{self.name}')"
 
 
 # App routes:
