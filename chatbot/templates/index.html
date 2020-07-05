@@ -1,6 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('profile') }}">My Profile</a> |
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a> |
+        <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
             <div id="chatbox">
