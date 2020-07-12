@@ -25,7 +25,7 @@ class User(db.Model, UserMixin):
 class Pattern(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(500), nullable=False)
-    response = db.relationship('Response', secondary=tags, backref=db.backref('tags', lazy='dynamic'))
+    response = db.relationship('Response', secondary=tags, backref=db.backref('pattern', lazy='dynamic'))
 
     def __repr__(self):
         return f"Pattern('{self.id}', '{self.name}')"
