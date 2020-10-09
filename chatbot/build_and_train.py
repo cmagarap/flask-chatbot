@@ -1,6 +1,7 @@
 from nltk.stem.lancaster import LancasterStemmer
 from tensorflow import reset_default_graph
 import json
+import os
 import nltk
 import numpy as np
 import pickle
@@ -8,7 +9,7 @@ import tflearn as tfl
 
 stemmer = LancasterStemmer()
 
-with open('intents.json') as file:
+with open('../intents.json') as file:
     data = json.load(file)
 
 try:
@@ -35,7 +36,7 @@ except:
 
     # Strip the words into their root words:
     words = [stemmer.stem(word.lower()) for word in words if word != '?']
-    # Remove the duplicated and sort the words:
+    # Remove the duplicates and sort the words:
     words = sorted(list(set(words)))
     labels = sorted(labels)
 
@@ -65,6 +66,10 @@ except:
     # Convert into numpy array:
     training = np.array(training)
     output = np.array(output)
+
+    # Check if objects folder exists:
+    if not os.path.exists('objects'):
+        os.mkdir('objects')
 
     # Save into a pickle file:
     with open('objects/data.pickle', 'wb') as f:

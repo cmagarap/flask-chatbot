@@ -13,10 +13,11 @@ with open('intents.json') as file:
     data = json.load(file)
 
 try:
-    with open('objects/data.pickle', 'rb') as f:
+    with open('chatbot/objects/data.pickle', 'rb') as f:
         words, labels, training, output = pickle.load(f)
 except:
     print('Cannot find data.pickle file. Please try to run build_and_train.py first.')
+
 
 reset_default_graph()
 net = tfl.input_data(shape=[None, len(training[0])])
@@ -28,7 +29,7 @@ net = tfl.regression(net)
 model = tfl.DNN(net)
 
 try:
-    model.load('objects/chatbot_model.h5')
+    model.load('chatbot/objects/chatbot_model.h5')
 except Exception as e:
     print('ERROR:', e)
 
