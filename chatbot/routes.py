@@ -4,7 +4,9 @@ from chatbot.forms import LoginForm, RegistrationForm
 from chatbot.models import User
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, login_required, logout_user
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
 
 @app.route('/')
 def index():
