@@ -31,9 +31,11 @@ def create_app(config_class=Config):
 
     login_manager.init_app(app)
 
+    from chatbot.errors.handlers import errors
     from chatbot.main.routes import main
     from chatbot.users.routes import users
 
+    app.register_blueprint(errors)
     app.register_blueprint(main)
     app.register_blueprint(users)
 
