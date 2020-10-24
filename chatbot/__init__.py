@@ -1,31 +1,40 @@
+from chatbot.config import Config
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-import os
 
 
-# Configurations:
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '15e0aecb49502bfb7c15d17e2a79509a'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chatbot.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
-app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
+bcrypt = Bcrypt()
+mail = Mail()
 
-bcrypt = Bcrypt(app)
-mail = Mail(app)
+db = SQLAlchemy()
+migrate = Migrate(db=db)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 
-from chatbot import routes
+
+def create_app(config_class=Config):
+    # Configurations:
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    bcrypt.init_app(app)
+    mail.init_app(app)
+
+    db.init_app(app)
+    migrate.init_app(app)
+
+    login_manager.init_app(app)
+
+    from chatbot.main.routes import main
+    from chatbot.users.routes import users
+
+    app.register_blueprint(main)
+    app.register_blueprint(users)
+
+    return app
