@@ -10,70 +10,67 @@ import tflearn as tfl
 stemmer = LancasterStemmer()
 
 with open('../intents.json') as file:
-    data = json.load(file)
+    intents = json.load(file)
 
-try:
-    with open('objects/data.pickle', 'rb') as f:
-        words, labels, training, output = pickle.load(f)
-except:
-    words = []
-    labels = []
-    docs_x = []
-    docs_y = []
+words = []
+labels = []
+docs_x = []
+docs_y = []
 
-    # ===================== Data Preprocessing =====================
-    for intent in data['intents']:
-        for pattern in intent['patterns']:
-            tokenized_words = nltk.word_tokenize(pattern)
-            # Add the tokenized_words into words list
-            words.extend(tokenized_words)
-            docs_x.append(tokenized_words)
-            docs_y.append(intent['tag'])
+# ===================== Data Preprocessing =====================
+for intent in intents:
+    for pattern in intent['patterns']:
+        tokenized_words = nltk.word_tokenize(pattern)
+        # Add the tokenized_words into words list
+        words.extend(tokenized_words)
+        docs_x.append(tokenized_words)
+        docs_y.append(intent['tag'])
 
-        # Put the tags inside the labels list
-        if intent['tag'] not in labels:
-            labels.append(intent['tag'])
+    # Put the tags inside the labels list
+    if intent['tag'] not in labels:
+        labels.append(intent['tag'])
 
-    # Strip the words into their root words:
-    words = [stemmer.stem(word.lower()) for word in words if word != '?']
-    # Remove the duplicates and sort the words:
-    words = sorted(list(set(words)))
-    labels = sorted(labels)
+# Strip the words into their root words:
+words = [stemmer.stem(word.lower()) for word in words if word != '?']
+# Remove the duplicates and sort the words:
+words = sorted(list(set(words)))
+labels = sorted(labels)
 
-    training = []
-    output = []
+training = []
+output = []
 
-    output_empty = [0] * len(labels)
+output_empty = [0] * len(labels)
 
-    for x, doc in enumerate(docs_x):
-        bag = []
+for x, doc in enumerate(docs_x):
+    bag = []
 
-        stemmed_words = [stemmer.stem(word.lower()) for word in doc]
+    stemmed_words = [stemmer.stem(word.lower()) for word in doc]
 
-        for word in words:
-            # If the word exist, append 1
-            if word in stemmed_words:
-                bag.append(1)
-            else:
-                bag.append(0)
+    for word in words:
+        # If the word exist, append 1
+        if word in stemmed_words:
+            bag.append(1)
+        else:
+            bag.append(0)
 
-        output_row = output_empty[:]
-        output_row[labels.index(docs_y[x])] = 1
+    output_row = output_empty[:]
+    output_row[labels.index(docs_y[x])] = 1
 
-        training.append(bag)
-        output.append(output_row)
+    training.append(bag)
+    output.append(output_row)
 
-    # Convert into numpy array:
-    training = np.array(training)
-    output = np.array(output)
+# Convert into numpy array:
+training = np.array(training)
+output = np.array(output)
 
-    # Check if objects folder exists:
-    if not os.path.exists('objects'):
-        os.mkdir('objects')
+# Check if objects folder exists:
+if not os.path.exists('objects'):
+    os.mkdir('objects')
 
-    # Save into a pickle file:
-    with open('objects/data.pickle', 'wb') as f:
-        pickle.dump((words, labels, training, output), f)
+# Save into a pickle file:
+with open('objects/data.pickle', 'wb') as f:
+    pickle.dump((words, labels, training, output), f)
+
 
 # ===================== Building the model =====================
 reset_default_graph()

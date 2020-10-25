@@ -55,7 +55,7 @@ def generate_response(sentence):
 
     # If the accuracy is greater than 70%, return a response from the model
     if results[results_index] > 0.7:
-        for tg in data['intents']:
+        for tg in data:
             if tg['tag'] == tag:
                 responses = tg['responses']
 
