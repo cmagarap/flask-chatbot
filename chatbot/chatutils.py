@@ -48,7 +48,7 @@ def bag_of_words(s, words):
     return np.array(bag)
 
 
-def response(sentence):
+def generate_response(sentence):
     results = model.predict([bag_of_words(sentence, words)])[0]
     results_index = np.argmax(results)
     tag = labels[results_index]
