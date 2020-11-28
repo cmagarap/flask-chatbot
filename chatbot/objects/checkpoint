@@ -1,2 +1,2 @@
-model_checkpoint_path: "/home/seej/Documents/FlaskChatbotProject/flask-chatbot/chatbot/objects/chatbot_model.h5"
-all_model_checkpoint_paths: "/home/seej/Documents/FlaskChatbotProject/flask-chatbot/chatbot/objects/chatbot_model.h5"
+model_checkpoint_path: "/Users/seej/Documents/MyProjects/FlaskChatbot/flask-chatbot/chatbot/objects/chatbot_model.h5"
+all_model_checkpoint_paths: "/Users/seej/Documents/MyProjects/FlaskChatbot/flask-chatbot/chatbot/objects/chatbot_model.h5"
