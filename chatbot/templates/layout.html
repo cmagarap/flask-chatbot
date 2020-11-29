@@ -10,6 +10,18 @@
 </head>
 <body>
 <h1 class="jumbotron text-center">Chatbot in Python using Flask</h1>
+
+{% if current_user.is_authenticated %}
+<div class="sidebar">
+    <a href="{{ url_for('users.dashboard') }}" {% if title == 'Dashboard' %}class="active"{% endif %}>Dashboard</a>
+    <a href="{{ url_for('users.train') }}" {% if title == 'Train Data' %}class="active"{% endif %}>Train Data</a>
+    <a href="{{ url_for('main.index') }}" {% if title == 'Home' %}class="active"{% endif %}>Chatbot</a>
+    <a href="#account">My Account (collapsible)</a>
+</div>
+
+{% endif %}
+
+<div class="col-sm-6 offset-sm-3">
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for category, message in messages %}
@@ -19,6 +31,7 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
+</div>
 {% block content %}{% endblock %}
 </body>
 </html>

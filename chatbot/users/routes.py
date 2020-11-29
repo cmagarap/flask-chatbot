@@ -8,6 +8,12 @@ from flask_login import current_user, login_user, login_required, logout_user
 users = Blueprint('users', __name__)
 
 
+@users.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('users/dashboard.html', title='Dashboard')
+
+
 @users.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -90,3 +96,9 @@ def reset_token(token):
         flash('Your password has been updated. You are now able to log in', 'success')
         return redirect(url_for('main.index'))
     return render_template('users/reset_password.html', titl='Reset Password', form=form)
+
+
+@users.route('/train')
+@login_required
+def train():
+    return render_template('users/train.html', title='Train Data')

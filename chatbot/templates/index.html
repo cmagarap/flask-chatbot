@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div>
-    {% if current_user.is_authenticated %}
-        <a href="{{ url_for('users.profile') }}">My Profile</a> |
-        <a href="{{ url_for('users.logout') }}">Logout</a>
-    {% else %}
-        <a href="{{ url_for('users.login') }}">Login</a> |
-        <a href="{{ url_for('users.register') }}">Register</a>
-    {% endif %}
+{#    {% if current_user.is_authenticated %}#}
+{#        <a href="{{ url_for('users.profile') }}">My Profile</a> |#}
+{#        <a href="{{ url_for('users.logout') }}">Logout</a>#}
+{#    {% else %}#}
+{#        <a href="{{ url_for('users.login') }}">Login</a> |#}
+{#        <a href="{{ url_for('users.register') }}">Register</a>#}
+{#    {% endif %}#}
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
             <div id="chatbox">
@@ -17,6 +17,13 @@
                 <input id="textInput" class="form-control" type="text" name="msg" placeholder="Type your message here">
                 <input id="buttonInput" class="btn btn-success form-control" type="submit" value="Send">
             </div>
+            <br>
+            {% if not current_user.is_authenticated %}
+            <div align="center">
+                <a href="{{ url_for('users.login') }}">Login</a> |
+                <a href="{{ url_for('users.register') }}">Register</a>
+            </div>
+            {% endif %}
         </div>
     </div>
     <script>

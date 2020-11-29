@@ -1,6 +1,8 @@
 html, body {
     max-width: 100%;
     overflow-x: hidden;
+    margin: 0;
+    font-family: "Lato", sans-serif;
 }
 
 .botText {
@@ -38,4 +40,54 @@ html, body {
 }
 #textInput {
     border-bottom: 3px solid #FF1493;
+}
+
+.sidebar {
+  margin: -32px 0px 0px 0px;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #0000A0;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #FF1493;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
 }
