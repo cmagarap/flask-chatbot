@@ -1,31 +1,46 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div>
-{#    {% if current_user.is_authenticated %}#}
-{#        <a href="{{ url_for('users.profile') }}">My Profile</a> |#}
-{#        <a href="{{ url_for('users.logout') }}">Logout</a>#}
-{#    {% else %}#}
-{#        <a href="{{ url_for('users.login') }}">Login</a> |#}
-{#        <a href="{{ url_for('users.register') }}">Register</a>#}
-{#    {% endif %}#}
-    <div class="row">
-        <div class="col-sm-6 offset-sm-3">
-            <div id="chatbox">
-                <!-- <p class="botText"><span>Hi!</span></p> -->
+    <br>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                {% if current_user.is_authenticated %}
+                    <div class="col-sm-3"></div>
+                {% else %}
+                    <div class="col-sm-2"></div>
+                {% endif %}
+                <div class="col-sm-6">
+                    <div id="chatbox">
+                        <!-- <p class="botText"><span>Hi!</span></p> -->
+                    </div>
+                    <div id="userInput">
+                        <input id="textInput" class="form-control" type="text" name="msg" placeholder="Type your message here">
+                        <input id="buttonInput" class="btn btn-info form-control" type="submit" value="Send">
+                    </div>
+                    <br>
+                    {% if not current_user.is_authenticated %}
+                        <div align="center">
+                            <a href="{{ url_for('users.login') }}">Login</a> |
+                            <a href="{{ url_for('users.register') }}">Register</a>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-            <div id="userInput">
-                <input id="textInput" class="form-control" type="text" name="msg" placeholder="Type your message here">
-                <input id="buttonInput" class="btn btn-success form-control" type="submit" value="Send">
-            </div>
-            <br>
-            {% if not current_user.is_authenticated %}
-            <div align="center">
-                <a href="{{ url_for('users.login') }}">Login</a> |
-                <a href="{{ url_for('users.register') }}">Register</a>
-            </div>
-            {% endif %}
         </div>
     </div>
+    {% if current_user.is_authenticated %}
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="copyright float-right">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, template made with <i class="material-icons">favorite</i> by
+                <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+            </div>
+        </div>
+    </footer>
+    {% endif %}
     <script>
         function getResponse() {
             let userText = $('#textInput').val();
@@ -63,5 +78,4 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</div>
 {% endblock %}
