@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">Edit Account</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="" novalidate>
+                                {{ form.hidden_tag() }}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {{ form.username.label(class='bmd-label-floating') }}
+                                            {% if form.username.errors %}
+                                                {{ form.username(class='form-control is-invalid') }}
+
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.username.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.username(class='form-control') }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {{ form.email.label(class='bmd-label-floating') }}
+                                            {% if form.email.errors %}
+                                                {{ form.email(class='form-control is-invalid') }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.email.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.email(class='form-control') }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Password</label>
+                                            <input type="password" class="form-control" value="*********" disabled>
+                                            <small class="text-muted">
+                                                <a href="#">Change password</a>
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            {{ form.submit(class='btn btn-info pull-right') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,11 +1,35 @@
 from chatbot import bcrypt, db
 from chatbot.models import User
-from chatbot.users.forms import LoginForm, RegistrationForm, RequestResetForm, ResetPasswordForm
+from chatbot.users.forms import (
+    LoginForm,
+    RegistrationForm,
+    RequestResetForm,
+    ResetPasswordForm,
+    UpdateAccountForm
+)
 from chatbot.users.utils import send_reset_email
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 
 users = Blueprint('users', __name__)
+
+
+@users.route('/account', methods=['GET', 'POST'])
+@login_required
+def account():
+    form = UpdateAccountForm()
+
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has been successfully updated.', 'success')
+        return redirect(url_for('users.account'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+
+    return render_template('users/account.html', title='Account', form=form)
 
 
 @users.route('/dashboard')
@@ -17,7 +41,7 @@ def dashboard():
 @users.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('users.dashboard'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -26,7 +50,7 @@ def login():
             login_user(user, remember=form.remember_me.data)
             next_page = request.args.get('next')
             flash('Login successful', 'success')
-            return redirect(next_page) if next_page else redirect(url_for('main.index'))
+            return redirect(next_page) if next_page else redirect(url_for('users.dashboard'))
         else:
             flash('Login unsuccessful. Please check email and password.', 'danger')
             return redirect(url_for('users.login'))
@@ -38,12 +62,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
-
-
-@users.route('/profile')
-@login_required
-def profile():
-    return render_template('users/profile.html', title='Profile')
 
 
 @users.route('/register', methods=['GET', 'POST'])
